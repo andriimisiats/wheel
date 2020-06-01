@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PrivatBank | Visa</title>
+        <link rel="stylesheet" href="main.css?v=3.0.0" type="text/css"/>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="Winwheel.js"></script>
+        <script type="text/javascript" src="tween.js"></script>
+    </head>
+    <body align = "center">
+        <div class = "logo-box">
+            <img class = "logo" src = "visa_privatbank.png"/>
+        </div>
+       
+        <div id = "drum">
+            <div class = "entry-text">Натисність на колесо, щоб отримати свій подарунок</div>
+            <img id="prizePointer" src="pointer.png" alt="V" />
+            <canvas id="canvas" width="900" height="900" data-responsiveMinWidth="180" data-responsiveScaleHeight="true" onClick="startSpin();">
+                <p style="{color: #003EA9;}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+            </canvas>
+
+            <div class = "legal-text">Пропозиція діє на території проведення заходу AWS Loft Kyiv з 14 по 18 жовтня 2019 року включно за умови оплати товару/їв  карткою Visa  через платіжний додаток Privat24 функцією FacePay на точках продажу, позначених відповідно. Кількість подарунків обмежена</div>
+        </div>
+
+        <div id = "prize"></div>
+        <script>
+            // Create winwheel as per normal.
+            let theWheel = new Winwheel({
+                'drawMode'     : 'image',
+                'numSegments'  : 8,     // Specify number of segments.
+                'responsive'   : true,  // This wheel is responsive!,
+                'segments'     :        // Define segments including colour and text.
+                [
+                    {'text' : 'качку',              'src': 'duck.png?v=4.0.0'},
+                    {'text' : 'екшн-камеру',        'src': 'camera.png?v=4.0.1'},
+                    {'text' : 'шкарпетки',          'src': 'socks.png?v=4.0.0'},
+                    {'text' : 'портативну колонку', 'src': 'speaker.png?v=4.0.0'},
+                    {'text' : 'екшн-камеру',        'src': 'camera.png?v=4.0.1'},
+                    {'text' : 'качку',              'src': 'duck.png?v=4.0.0'},
+                    {'text' : 'шкарпетки',          'src': 'socks.png?v=4.0.0'},
+                    {'text' : 'портативну колонку', 'src': 'speaker.png?v=4.0.0'},
+                ],
+                'animation' :           // Specify the animation to use.
+                {
+                    'type'     : 'spinToStop',
+                    'duration' : 5,     // Duration in seconds.
+                    'spins'    : 8,     // Number of complete spins.
+                    'callbackFinished' : 'alertPrize()'
+                }
+            });
+
+            let firstImg = new Image();
+
+            firstImg.onload = function()
+            {
+                theWheel.wheelImage = firstImg;
+                theWheel.draw();
+            }
+
+            firstImg.src = "drum.png?v=4.0.0";
+
+              // This function called after the spin animation has stopped.
+            function alertPrize()
+            {
+                // Call getIndicatedSegment() function to return pointer to the segment pointed to on wheel.
+                let winningSegment = theWheel.getIndicatedSegment();
+                // Basic alert of the segment text which is the prize name.
+
+
+                var prize = document.getElementById('prize');
+                prize.innerHTML += "<img class = 'winning-image' src = '" + winningSegment.src + "'/>"                 
+                prize.innerHTML += "<div class = 'entry-text'>Вітаємо!<br>Ви виграли " + winningSegment.text + "!<br><div style='margin:50px; font-size:50px;'>Можете забрати свій подарунок на стійці PrivatBank 24 | Visa в зоні коворкінгу</div></div>" 
+
+                var drum = document.getElementById('drum');
+                prize.style.display = "block";
+                drum.style.display = "none";
+            }
+
+            // -----------------------------------------------------------------
+            // Called by the onClick of the canvas, starts the spinning.
+            function startSpin()
+            {
+                document.getElementById('canvas').removeAttribute("onClick");
+
+                // Stop any current animation.
+                theWheel.stopAnimation(false);
+
+                // Duck 0
+                // Camera 45
+                // Socks 90
+                // Speaker 135
+                // Camera 180
+                // Duck 225
+                // Socks 270
+                // Speaker 315
+                // var items = [2, 47, 92, 137, 182, 227, 272, 317];
+                
+                var items = [2, 92, 137, 227, 272, 317];
+
+                var angle = items[Math.floor(Math.random() * items.length)];
+
+                let stopAt = (angle + Math.floor((Math.random() * 43)));
+
+                theWheel.animation.stopAngle = stopAt;
+                // Reset the rotation angle to less than or equal to 360 so spinning again
+                // works as expected. Setting to modulus (%) 360 keeps the current position.
+                theWheel.rotationAngle = theWheel.rotationAngle % 360;
+
+                // Start animation.
+                theWheel.startAnimation();
+            }
+        </script>
+    </body>
+</html>

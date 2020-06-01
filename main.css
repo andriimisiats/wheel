@@ -1,0 +1,76 @@
+html
+{
+	background: #FFFFFF;
+}
+
+body
+{
+    font-family: arial;
+    margin: 0px;
+}
+
+/* Do some css reset on selected elements */
+
+.prize
+{
+	display: none;
+	width: 100%;
+}
+
+.logo-box
+{
+	padding: 0px;
+	margin: 0px;
+	background: #ffffff;
+	width: 100%;
+}
+
+.logo
+{
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+}
+
+.entry-text
+{
+	color: #003EA9;
+	margin: 80px 0px;
+	font-size: 80px;
+}
+
+#drum {
+    position: relative;
+}
+ 
+#canvas {
+    z-index: 1;
+}
+ 
+#prizePointer {
+    position: absolute;
+    z-index: 999;
+    margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	width: 100px;
+}
+
+#canvas
+{
+	background: #ffffff;
+	margin-top: 80px;
+}
+
+.winning-image
+{
+	width: 100%;
+}
+
+.legal-text
+{
+	color: #003EA9;
+	font-size: 20px;
+	margin: 50px;
+}
